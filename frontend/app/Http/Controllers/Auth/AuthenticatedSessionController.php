@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use GuzzleHttp\Client;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -24,18 +25,41 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $client = new Client();
+        try {
+            $response = $client->post('http://localhost:8080/login', [
+                'json' => [
+                    'email' => $request->email,
+                    'password' => $request->password,
+                ]
+            ]);
 
-        $request->session()->regenerate();
+            $statusCode = $response->getStatusCode();
+            $body = json_decode($response->getBody()->getContents(), true);
 
-        if($request->user()->role == 'admin') {
-            return redirect('admin/dashboard');
-        } else if($request->user()->role == 'owner') {
-            return redirect('owner/dashboard');
+            if ($statusCode == 200) {
+                // Assume the API returns user data and token
+                $user = $body['user'];
+                $token = $body['token'];
+
+                // Manually log the user in
+                Auth::loginUsingId($user['id']);
+
+                $request->session()->regenerate();
+
+                if ($user['role'] == 'admin') {
+                    return redirect('admin/dashboard');
+                } else if ($user['role'] == 'owner') {
+                    return redirect('owner/dashboard');
+                }
+
+                return redirect()->route('dashboard');
+            } else {
+                return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['email' => 'An error occurred during login.']);
         }
-
-        // return redirect()->intended(route('dashboard'));
-        return redirect()->route('dashboard');
     }
 
     /**

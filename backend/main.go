@@ -24,6 +24,7 @@ func main() {
 
     // Routes
     r.POST("/register", controllers.RegisterUserHandler)
+    r.POST("/login", controllers.Login)
 
     // Start the server
     if err := r.Run(":8080"); err != nil {
