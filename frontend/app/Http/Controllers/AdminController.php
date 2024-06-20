@@ -55,6 +55,6 @@ class AdminController extends Controller
 
         toastr()->closeButton()->addSuccess('Kategori Berhasil Dihapus!');
 
-        return redirect()->back();
+        return redirect('/admin/view_category');
     }
 }

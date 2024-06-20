@@ -2,7 +2,7 @@ package models
 
 import (
     "time"
-    "gorm.io/gorm"
+    // "gorm.io/gorm"
 )
 
 type Cart struct {
@@ -18,9 +18,4 @@ type Cart struct {
 
 func (Cart) TableName() string {
     return "carts"
-}
-
-// Migrasi untuk Cart
-func MigrateCart(db *gorm.DB) {
-    db.AutoMigrate(&Cart{})
 }

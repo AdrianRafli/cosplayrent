@@ -19,9 +19,10 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         
-        <form action="{{url('owner/update_category', $data->id)}}" method="PUT" class="my-5 mx-5">
-          <h1 class="mb-4">Update Kategori</h1>
+        <form action="{{url('admin/update_category', $data->id)}}" method="POST" class="my-5 mx-5">
           @csrf
+          @method('PUT')
+          <h1 class="mb-4">Update Kategori</h1>
           <div>
             <label for="category" class="form-label" style="font-size: 20px;">Nama Kategori</label>
             <div class="d-flex align-items-center">

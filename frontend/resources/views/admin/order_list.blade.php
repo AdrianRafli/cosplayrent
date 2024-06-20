@@ -43,7 +43,7 @@
             <thead>
               <tr>
                   <th>Nama</th>
-                  <th>Address</th>
+                  <th>Toko</th>
                   <th>Nama Kostum</th>
                   <th>Harga</th>
                   <th>Gambar</th>
@@ -54,7 +54,7 @@
                 @foreach ($data as $data)
                 <tr>
                     <td>{{$data->user->name}}</td>
-                    <td>{{$data->address}}</td>
+                    <td>{{$data->shop->shop_name}}</td>
                     <td>{{$data->costume->name}}</td>
                     <td>{{$data->costume->price}}</td>
                     <td>

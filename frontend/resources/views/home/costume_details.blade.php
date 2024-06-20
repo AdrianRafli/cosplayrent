@@ -102,16 +102,14 @@
                                     </div>
                                 </div>
                                 <div class="row d-flex justify-content-between">
-                                    <a href="{{url('shop_details', $item->shop->id)}}">
-                                        <div class="col-7">
-                                            <p>{{$item->shop->shop_name}}</p>
-                                        </div>
-                                    </a>
+                                    <div class="col-7">
+                                        <p>{{$item->shop->shop_name}}</p>
+                                    </div>
                                     <div class="col-5">
                                         <p class="text-end">{{$item->shop->city}}</p>
                                     </div>
                                 </div>
-                                <p><i class="fa-solid fa-star me-2"></i>5.0</p>
+                                <p><i class="fa-solid fa-star me-2" style="color: yellow"></i>5.0</p>
                             </div>
                         </div>
                     </a>
@@ -141,16 +139,14 @@
                                     </div>
                                 </div>
                                 <div class="row d-flex justify-content-between">
-                                    <a href="{{url('shop_details', $item->shop->id)}}">
-                                        <div class="col-7">
-                                            <p>{{$item->shop->shop_name}}</p>
-                                        </div>
-                                    </a>
+                                    <div class="col-7">
+                                        <p>{{$item->shop->shop_name}}</p>
+                                    </div>
                                     <div class="col-5">
                                         <p class="text-end">{{$item->shop->city}}</p>
                                     </div>
                                 </div>
-                                <p><i class="fa-solid fa-star me-2"></i>5.0</p>
+                                <p><i class="fa-solid fa-star me-2" style="color: yellow"></i>5.0</p>
                             </div>
                         </div>
                     </a>

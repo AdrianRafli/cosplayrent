@@ -2,7 +2,7 @@ package models
 
 import (
     "time"
-    "gorm.io/gorm"
+    // "gorm.io/gorm"
 )
 
 type Costume struct {
@@ -21,10 +21,5 @@ type Costume struct {
 }
 
 func (Costume) TableName() string {
-    return "costume"
-}
-
-// Migrasi untuk Costume
-func MigrateCostume(db *gorm.DB) {
-    db.AutoMigrate(&Costume{})
+    return "costumes"
 }

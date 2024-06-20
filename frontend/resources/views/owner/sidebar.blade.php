@@ -1,9 +1,9 @@
 <nav id="sidebar">
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
-      <div class="avatar"><img src="{{asset('ownercss/img/avatar-6.jpg')}}" alt="..." class="img-fluid rounded-circle"></div>
+      <div class="avatar"><img src="{{asset('/shops/default.jpg')}}" alt="..." class="img-fluid rounded-circle"></div>
       <div class="title">
-        <h1 class="h5">CosplayKita</h1>
+        <h1 class="h5">CosplayKu</h1>
         <p>Owner</p>
       </div>
     </div>

@@ -17,17 +17,17 @@ func Connect() {
         log.Fatal("Failed to connect to database:", err)
     }
 
+    db.AutoMigrate(&models.User{}, 
+        // &models.Category{}, 
+        &models.Shop{}, 
+        // &models.Costume{}, 
+        // &models.Cart{}, 
+        // &models.Order{}
+    )
+
     DB = db
 }
 
 func GetDB() *gorm.DB {
     return DB
-}
-
-func MigrateUser(db *gorm.DB) {
-    db.AutoMigrate(&models.User{})
-}
-
-func MigrateShop(db *gorm.DB) {
-    db.AutoMigrate(&models.Shop{})
 }

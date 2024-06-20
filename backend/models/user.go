@@ -2,7 +2,7 @@ package models
 
 import (
     "time"
-    "gorm.io/gorm"
+    // "gorm.io/gorm"
 )
 
 type User struct {
@@ -21,7 +21,3 @@ func (User) TableName() string {
     return "users"
 }
 
-// Migrasi untuk User
-func MigrateUser(db *gorm.DB) {
-    db.AutoMigrate(&User{})
-}

@@ -2,7 +2,7 @@ package models
 
 import (
     "time"
-    "gorm.io/gorm"
+    // "gorm.io/gorm"
 )
 
 type Shop struct {
@@ -19,9 +19,4 @@ type Shop struct {
 
 func (Shop) TableName() string {
     return "shops"
-}
-
-// Migrasi untuk Shop
-func MigrateShop(db *gorm.DB) {
-    db.AutoMigrate(&Shop{})
 }

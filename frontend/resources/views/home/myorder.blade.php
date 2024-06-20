@@ -46,6 +46,7 @@
                               <th>Nama Kostum</th>
                               <th>Harga</th>
                               <th>Gambar</th>
+                              <th>Toko</th>
                               <th>Status</th>
                               <th>Konfirmasi Pengembalian</th>
                             </tr>
@@ -59,6 +60,11 @@
                                 <td>{{$order->costume->price}}</td>
                                 <td>
                                   <img src="/costumes/{{$order->costume->image}}" class="costume-img" alt="Costume">
+                                </td>
+                                <td>
+                                  <h5 class="fw-bold">{{$order->shop->shop_name}}</h5>
+                                  <h6>Alamat Toko:</h6>
+                                  <h6 class="fw-bold">{{$order->shop->address}}, {{$order->shop->city}}</h6>
                                 </td>
                                 <td>
                                   @if ($order->status == 'dalam proses')
@@ -77,8 +83,7 @@
                                   @if ($order->status == 'dikirim')
                                     <a href="{{url('diterima', $order->id)}}" class="btn btn-info">Diterima</a>
                                   @elseif ($order->status == 'diterima')
-                                  <h5>Kembalikan ke:</h5>
-                                  <p class="mb-2">{{$order->shop->address}}</p>
+                                    <p>Dimohon untuk mengembalikan kostum sesuai alamat toko</p>
                                     <a href="{{url('dikembalikan', $order->id)}}" class="btn btn-success">Proses Pengembalian</a>
                                   @elseif ($order->status == 'selesai')
                                     <p>Selesai</p>

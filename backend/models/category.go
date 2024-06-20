@@ -2,7 +2,7 @@ package models
 
 import (
     "time"
-    "gorm.io/gorm"
+    // "gorm.io/gorm"
 )
 
 type Category struct {
@@ -14,9 +14,4 @@ type Category struct {
 
 func (Category) TableName() string {
     return "categories"
-}
-
-// Migrasi untuk Category
-func MigrateCategory(db *gorm.DB) {
-    db.AutoMigrate(&Category{})
 }

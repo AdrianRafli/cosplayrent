@@ -98,7 +98,15 @@ class HomeController extends Controller
 
         $costumes = $query->get();
 
-        return view('home.search', compact('costumes'));
+        if(Auth::id()) {
+            $user = Auth::user();
+            $userid = $user->id;
+            $count = Cart::where('user_id', $userid)->count();
+        } else {
+            $count = ' ';
+        }
+
+        return view('home.search', compact('costumes', 'count'));
     }
 
     public function add_cart($id, Request $request) {
