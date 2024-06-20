@@ -1,16 +1,27 @@
 package models
 
-import "gorm.io/gorm"
+import (
+    "time"
+    "gorm.io/gorm"
+)
 
 type Shop struct {
-    gorm.Model
-    UserID     uint   `gorm:"not null"`
-    ShopName   string `gorm:"size:100;not null"`
-    Description string `gorm:"type:text"`
-    Address    string `gorm:"type:text"`
-    Contact    string `gorm:"size:50"`
+    ID          uint           `gorm:"primaryKey"`
+    UserID      uint
+    ShopName    string         `gorm:"size:255"`
+    City        string         `gorm:"size:255"`
+    Address     string         `gorm:"size:255"`
+    PhoneNumber string         `gorm:"size:255"`
+    Image       string         `gorm:"size:255;default:'default.jpg'"`
+    CreatedAt   time.Time
+    UpdatedAt   time.Time
 }
 
 func (Shop) TableName() string {
-	return "Shop"
+    return "shops"
+}
+
+// Migrasi untuk Shop
+func MigrateShop(db *gorm.DB) {
+    db.AutoMigrate(&Shop{})
 }

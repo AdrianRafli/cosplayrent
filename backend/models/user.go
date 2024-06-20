@@ -1,15 +1,27 @@
 package models
 
-import "gorm.io/gorm"
+import (
+    "time"
+    "gorm.io/gorm"
+)
 
 type User struct {
-    gorm.Model
-    Name     string `gorm:"size:100;not null" json:"name" binding:"required"`
-    Email    string `gorm:"size:100;not null;unique" json:"email" binding:"required,email"`
-    Password string `gorm:"size:255;not null" json:"password" binding:"required"`
-    Role     string `gorm:"type:enum('admin', 'renter');not null" json:"role" binding:"required,oneof=admin renter"`
+    ID                uint           `gorm:"primaryKey"`
+    Name              string         `gorm:"size:255"`
+    Email             string         `gorm:"uniqueIndex;size:255"`
+    Role              string         `gorm:"size:255"`
+    EmailVerifiedAt   *time.Time
+    Password          string         `gorm:"size:255"`
+    RememberToken     string         `gorm:"size:100"`
+    CreatedAt         time.Time
+    UpdatedAt         time.Time
 }
 
 func (User) TableName() string {
-	return "User"
+    return "users"
+}
+
+// Migrasi untuk User
+func MigrateUser(db *gorm.DB) {
+    db.AutoMigrate(&User{})
 }

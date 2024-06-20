@@ -1,18 +1,30 @@
 package models
 
-import "gorm.io/gorm"
+import (
+    "time"
+    "gorm.io/gorm"
+)
 
 type Costume struct {
-    gorm.Model
-    ShopID      uint    `gorm:"not null"`
-    CostumeName string  `gorm:"size:100;not null"`
-    Description string  `gorm:"type:text"`
-    Price       float64 `gorm:"type:decimal(10,2)"`
-    Picture     string  `gorm:"size:255"`
-    Size        string  `gorm:"size:50"`
-    Available   bool    `gorm:"default:true"`
+    ID          uint           `gorm:"primaryKey"`
+    ShopID      uint
+    Name        string         `gorm:"size:255"`
+    Description string         `gorm:"type:text"`
+    Price       string         `gorm:"size:255"`
+    Day         int
+    Category    string         `gorm:"size:255"`
+    Size        string         `gorm:"size:255"`
+    Available   string         `gorm:"size:255"`
+    Image       *string
+    CreatedAt   time.Time
+    UpdatedAt   time.Time
 }
 
 func (Costume) TableName() string {
-	return "Costume"
+    return "costume"
+}
+
+// Migrasi untuk Costume
+func MigrateCostume(db *gorm.DB) {
+    db.AutoMigrate(&Costume{})
 }

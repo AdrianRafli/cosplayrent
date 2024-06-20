@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shop;
-use App\Models\User;
+// use App\Models\Shop;
+// use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,30 +47,39 @@ class RegisteredUserController extends Controller
 
         $request->validate($rules);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-        ]);
+        // Hash the password
+        $hashedPassword = Hash::make($request->password);
 
-        if ($request->role === 'owner') {
-            Shop::create([
-                'user_id' => $user->id,
-                'shop_name' => $request->shop_name,
-                'city' => $request->city,
-                'address' => $request->address,
-                'phone_number' => $request->phone_number,
+        $client = new Client();
+        try {
+            $response = $client->post('http://localhost:8080/register', [
+                'json' => [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'role' => $request->role,
+                    'password' => $hashedPassword,
+                    'shop_name' => $request->shop_name ?? null,
+                    'city' => $request->city ?? null,
+                    'address' => $request->address ?? null,
+                    'phone_number' => $request->phone_number ?? null,
+                ]
             ]);
+
+            $statusCode = $response->getStatusCode();
+            $body = json_decode($response->getBody()->getContents(), true);
+
+            if ($statusCode == 201) {
+                event(new Registered($body['user']));
+
+                toastr()->closeButton()->addSuccess('Akun Berhasil Dibuat!');
+                return redirect(route('login'));
+            } else {
+                toastr()->closeButton()->addError('Terjadi kesalahan saat membuat akun!');
+                return redirect()->back()->withInput()->withErrors($body['error']);
+            }
+        } catch (\Exception $e) {
+            toastr()->closeButton()->addError('Terjadi kesalahan saat membuat akun!');
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
         }
-
-        event(new Registered($user));
-
-        // langsung login
-        // Auth::login($user);
-
-        // return redirect(route('dashboard', absolute: false));
-        toastr()->closeButton()->addSuccess('Akun Berhasil Dibuat!');
-        return redirect(route('login'));
     }
 }
