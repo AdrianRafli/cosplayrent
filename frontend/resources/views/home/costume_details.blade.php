@@ -88,7 +88,7 @@
             <div class="row row-cols-4">
                 @foreach ($related_costumes as $item)
                 <div class="col mb-3">
-                    <a href="{{url('costume_details', $costume->id)}}">
+                    <a href="{{url('costume_details', $item->id)}}">
                         <div class="card px-3 pt-3 shadow w-100">
                             <img src="/costumes/{{$item->image}}" alt="costume" class="relate-costume">
                             <div class="card-body w-100 d-flex flex-column">

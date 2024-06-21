@@ -20,11 +20,20 @@ class HomeController extends Controller
         return view('admin.index', compact('renter', 'owner', 'order', 'selesai'));
     }
     public function owner() {
-        return view('owner.index');
+        $shop = Shop::where('user_id', Auth::id())->first();
+        // Semua order dari shop ini
+        $totalOrder = Order::where('shop_id', $shop->id)->count();
+        // Semua order dari shop ini yang selesai
+        $completedOrder = Order::where('shop_id', $shop->id)
+                            ->where('status', 'selesai')
+                            ->count();
+        // Jumlah kostum
+        $costume = Costume::where('shop_id', $shop->id)->count();
+        return view('owner.index', compact('shop', 'totalOrder', 'completedOrder', 'costume'));
     }
 
     public function home() {
-        $costume = Costume::all();
+        $costume = Costume::take(3)->get();
         // $costume = Costume::all();
         if(Auth::id()) {
             $user = Auth::user();
@@ -37,7 +46,7 @@ class HomeController extends Controller
     }
 
     public function login_home() {
-        $costume = Costume::all();
+        $costume = Costume::take(3)->get();
         if(Auth::id()) {
             $user = Auth::user();
             $userid = $user->id;

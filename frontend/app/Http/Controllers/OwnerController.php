@@ -12,15 +12,17 @@ use Illuminate\Support\Facades\Auth;
 class OwnerController extends Controller
 {
     public function view_costume() {
+        $shop = Shop::where('user_id', Auth::id())->first();
         $costume = Costume::all();
 
-        return view('owner.view_costume', compact('costume'));
+        return view('owner.view_costume', compact('costume', 'shop'));
     }
 
     public function add_costume() {
+        $shop = Shop::where('user_id', Auth::id())->first();
         $category = Category::all();
 
-        return view('owner.add_costume', compact('category'));
+        return view('owner.add_costume', compact('category', 'shop'));
     }
 
     public function upload_costume(Request $request) {
@@ -52,10 +54,11 @@ class OwnerController extends Controller
     }
 
     public function edit_costume($id) {
+        $shop = Shop::where('user_id', Auth::id())->first();
         $data = Costume::find($id);
         $category = Category::all();
 
-        return view('owner.edit_costume', compact('data', 'category'));
+        return view('owner.edit_costume', compact('data', 'category', 'shop'));
     }
 
     public function update_costume(Request $request, $id) {
@@ -102,10 +105,11 @@ class OwnerController extends Controller
     }
 
     public function order_list() {
+        $shop = Shop::where('user_id', Auth::id())->first();
         $user = Auth::user()->id;
-        $shop = Shop::where('user_id', $user)->pluck('id');
-        $data = Order::where('shop_id', $shop)->get();
-        return view('owner.order_list', compact('data'));
+        $shopdata = Shop::where('user_id', $user)->pluck('id');
+        $data = Order::where('shop_id', $shopdata)->get();
+        return view('owner.order_list', compact('data', 'shop'));
     }
 
     public function dikirim($id) {
