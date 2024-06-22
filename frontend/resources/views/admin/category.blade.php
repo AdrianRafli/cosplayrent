@@ -59,7 +59,12 @@
                     <td>{{$data->name}}</td>
                     <td>
                       <a href="{{url('admin/edit_category', $data->id)}}" class="btn btn-info">Edit</a>
-                      <a href="{{url('admin/delete_category', $data->id)}}" onclick="confirmation(event)" class="btn btn-danger">Delete</a>
+                      <form id="delete-form-{{ $data->id }}" action="{{ url('admin/delete_category', $data->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-danger" onclick="confirmation(event, {{ $data->id }})">Delete</button>
+                      </form>
+                      {{-- <a href="{{url('admin/delete_category', $data->id)}}" onclick="confirmation(event)" class="btn btn-danger">Delete</a> --}}
                     </td>
                 </tr>
                 @endforeach
@@ -89,24 +94,20 @@
     <script type="text/javascript">
       $('#category-table').DataTable();
 
-      function confirmation(ev) {
+      function confirmation(ev, id) {
         ev.preventDefault();
 
-        var urlToRedirect = ev.currentTarget.getAttribute('href');
-        console.log(urlToRedirect);
-
         swal({
-          title: "Yakin untuk menghapus?",
-          text: "Penghapusan akan permanen!",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
+            title: "Yakin untuk menghapus?",
+            text: "Penghapusan akan permanen!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-        
-        .then((willCancel)=> {
-          if(willCancel) {
-            window.location.href=urlToRedirect;
-          }
+        .then((willDelete) => {
+            if (willDelete) {
+                document.getElementById('delete-form-' + id).submit();
+            }
         });
       }
     </script>

@@ -13,10 +13,10 @@
             <a class="nav-link" href="#" disabled >Promo</a>
           </li> --}}
         </ul>
-        <form class="d-flex" role="search" action="{{ url('search') }}" method="GET">
+        {{-- <form class="d-flex" role="search" action="{{ url('search') }}" method="GET">
             <input class="form-control me-2" type="search" placeholder="Nama Kostum" aria-label="Search"  name="query" style="width: 400px;">
             <button class="btn btn-outline-success" type="submit">Cari</button>
-        </form>
+        </form> --}}
         <div class="d-flex align-items-center gap-4">
             @if(Route::has('login'))
             @auth

@@ -51,9 +51,12 @@ class AdminController extends Controller
     public function delete_category($id) {
         $data = Category::find($id);
 
-        $data->delete();
-
-        toastr()->closeButton()->addSuccess('Kategori Berhasil Dihapus!');
+        if ($data) {
+            $data->delete();
+            toastr()->closeButton()->addSuccess('Kategori Berhasil Dihapus!');
+        } else {
+            toastr()->closeButton()->addError('Kategori Tidak Ditemukan!');
+        }
 
         return redirect('/admin/view_category');
     }
